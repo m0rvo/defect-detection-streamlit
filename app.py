@@ -56,7 +56,9 @@ if uploaded_file is not None:
             conf_ok = probabilities[0][0].item() * 100
             conf_def = probabilities[0][1].item() * 100
 
-        if conf_ok > conf_def:
+        confidence_gap = conf_ok - conf_def
+
+        if conf_ok > conf_def and confidence_gap > 20:
             st.success(f"✅ **OK** — Деталь нормальная")
             st.progress(int(conf_ok))
             st.metric("Уверенность OK", f"{conf_ok:.1f}%")
